@@ -89,7 +89,7 @@ export function registerConnection(config) {
 }
 
 class MysqlModel extends Sequelize.Model {
-    static init(connection) {
+    static register(connection) {
         const options = {
             tableName: this.table_name,
             timestamps: false,
