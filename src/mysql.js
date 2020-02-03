@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import sanitizeHtml from 'sanitize-html';
-import { Sequelize, Validator, Op } from 'sequelize';
+import { Sequelize, Validator, Op, DataTypes } from 'sequelize';
 import {
     ErrorException,
     EMAIL_FORMAT,
@@ -10,6 +10,9 @@ import {
     PHONE_NUMBER_FORMAT,
     SLUG_FORMAT
 } from 'toda-error';
+
+
+
 
 
 function sanitize(content) {
@@ -42,7 +45,7 @@ function sanitize(content) {
 }
 
 
-export function registerConnection(config) {
+function registerConnection(config) {
     return new Sequelize(config, null, null, {
         operatorsAliases: {
             $eq: Op.eq,
@@ -120,6 +123,8 @@ class MysqlModel extends Sequelize.Model {
                 },
             },
         };
+
+
 
         return super.init(
             this._defaultValueAndValidate(this.col_attributes),
@@ -346,3 +351,9 @@ class MysqlModel extends Sequelize.Model {
 }
 
 export default MysqlModel;
+
+
+export {
+    DataTypes as MysqlDataTypes,
+    registerConnection
+}
