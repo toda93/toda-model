@@ -45,8 +45,8 @@ function sanitize(content) {
 }
 
 
-function registerConnection(config) {
-    return new Sequelize(config, null, null, {
+function registerConnection(name, config) {
+    return new Sequelize(name, null, null, {
         operatorsAliases: {
             $eq: Op.eq,
             $ne: Op.ne,
