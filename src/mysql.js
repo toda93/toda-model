@@ -93,6 +93,9 @@ function registerConnection(name, config) {
 
 class MysqlModel extends Sequelize.Model {
     static register(connection) {
+
+        this.connection = connection;
+
         const options = {
             tableName: this.table_name,
             timestamps: false,
@@ -130,6 +133,18 @@ class MysqlModel extends Sequelize.Model {
             this._defaultValueAndValidate(this.col_attributes),
             options
         );
+    }
+
+    static async runTransaction(callback) {
+        let transaction = await this.connection.transaction();
+        try {
+            await callback(transaction);
+            await transaction.commit();
+        } catch (err) {
+            await transaction.rollback();
+            return false;
+        }
+        return true;
     }
 
     loadData(data, guard = []) {
