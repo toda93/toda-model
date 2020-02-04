@@ -9,7 +9,7 @@ import {
     NOT_EMPTY,
     PHONE_NUMBER_FORMAT,
     SLUG_FORMAT
-} from 'toda-error';
+} from '@azteam/error';
 
 
 
