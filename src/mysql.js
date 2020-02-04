@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import crypto from 'crypto';
 import sanitizeHtml from 'sanitize-html';
 import { Sequelize, Validator, Op, DataTypes } from 'sequelize';
 import {
@@ -43,6 +44,15 @@ function sanitize(content) {
         collapseWhitespace: true
     });
 }
+
+const createCacheName = (prefix, options) => {
+    if (_.isEmpty(options)) {
+        return prefix;
+    }
+    return prefix + crypto.createHash('sha1').update(JSON.stringify(options)).digest('hex');
+};
+
+
 
 
 function registerConnection(name, config) {
@@ -92,9 +102,29 @@ function registerConnection(name, config) {
 }
 
 class MysqlModel extends Sequelize.Model {
-    static register(connection) {
+
+
+    static createCacheName(prefix, options) {
+        if (_.isEmpty(options)) {
+            return prefix;
+        }
+        return prefix + crypto.createHash('sha1').update(JSON.stringify(options)).digest('hex');
+    }
+
+    static removeCache(database, name) {
+        // this.cacheService.remove(`${database}_${name}_all_`);
+        this.cacheService.remove(`${database}_${name}_`);
+    }
+
+
+    static register(connection, cacheService = null) {
 
         this.connection = connection;
+
+        if (cacheService) {
+            this.cacheService = cacheService;
+            this.useCache = true;
+        }
 
         const options = {
             tableName: this.table_name,
@@ -124,6 +154,18 @@ class MysqlModel extends Sequelize.Model {
                         model[key] = sanitize(model[key]);
                     });
                 },
+
+                afterSave: (model, options) => {
+                    if (useCache && !model.disableCache) {
+                        removeCache(this.database, model.constructor.name);
+                    }
+                },
+
+                afterDestroy: (model, options) => {
+                    if (useCache && !model.disableCache) {
+                        removeCache(this.database, model.constructor.name);
+                    }
+                },
             },
         };
 
@@ -147,18 +189,7 @@ class MysqlModel extends Sequelize.Model {
         return true;
     }
 
-    loadData(data, guard = []) {
-        for (const key in data) {
-            if (!guard.includes(key) && !_.isUndefined(data[key]) && _.isUndefined(this.attributes[key])) {
-                let value = data[key];
-                if (typeof value === 'object' || Array.isArray(value)) {
-                    value = JSON.stringify(value);
-                }
-                this.setDataValue(key, value);
-            }
-        }
-        return this;
-    }
+
 
     static _defaultValueAndValidate(attributes) {
         for (const attributeName in attributes) {
@@ -261,8 +292,18 @@ class MysqlModel extends Sequelize.Model {
 
     static async first(options = {}) {
         let data = null;
+
+        let cache_name = '';
+        if (this.useCache) {
+            cache_name = createCacheName(`${this.table_name}_one_`, options);
+            data = await this.cacheService.get(cache_name);
+        }
+
         if (_.isNull(data)) {
             data = await this.findOne(options);
+            if (this.useCache) {
+                this.cacheService.set(cache_name, data, options.cache_time);
+            }
         } else {
             data = this.toSequelize(data);
         }
@@ -279,6 +320,12 @@ class MysqlModel extends Sequelize.Model {
 
     static async get(options = {}) {
         let data = null;
+
+        let cache_name = '';
+        if (this.useCache) {
+            cache_name = createCacheName(`${this.table_name}_all_`, options);
+            data = await this.cacheService.get(cache_name);
+        }
 
         if (_.isNull(data)) {
             if (options.fulltext) {
@@ -317,6 +364,9 @@ class MysqlModel extends Sequelize.Model {
                     ...options,
                 });
 
+            }
+            if (this.useCache) {
+                this.cacheService.set(cache_name, data, options.cache_time);
             }
         }
         return data;
@@ -362,6 +412,20 @@ class MysqlModel extends Sequelize.Model {
             });
         }
         return data;
+    }
+
+
+    loadData(data, guard = []) {
+        for (const key in data) {
+            if (!guard.includes(key) && !_.isUndefined(data[key]) && _.isUndefined(this.attributes[key])) {
+                let value = data[key];
+                if (typeof value === 'object' || Array.isArray(value)) {
+                    value = JSON.stringify(value);
+                }
+                this.setDataValue(key, value);
+            }
+        }
+        return this;
     }
 }
 
