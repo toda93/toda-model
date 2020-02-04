@@ -1,6 +1,6 @@
 {
-  "name": "toda-model",
-  "version": "1.0.5",
+  "name": "@azteam/model",
+  "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "repository": {
