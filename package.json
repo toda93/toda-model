@@ -1,60 +1,60 @@
 {
-  "name": "@azteam/model",
-  "version": "1.0.0",
-  "description": "",
-  "main": "lib/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/toda93/model.git"
-  },
-  "engines": {
-    "node": ">= 10.0.0",
-    "npm": "^6.0.0"
-  },
-  "keywords": [
-    "toda",
-    "nodejs",
-    "model",
-    "sequelize",
-    "cassandra",
-    "mysql"
-  ],
-  "author": "toda <sp.azsolution.net@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/toda93/model/issues"
-  },
-  "homepage": "https://github.com/toda93/model#readme",
-  "dependencies": {
-    "mysql2": "~2.1.0",
-    "sanitize-html": "^1.20.1",
-    "sequelize": "~4.39.1",
-    "lodash": "~4.17.10",
-    "toda-error": "^1.1.2"
-  },
-  "devDependencies": {
-    "@babel/runtime": "^7.7.5",
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "@babel/plugin-transform-async-to-generator": "^7.7.4",
-    "@babel/plugin-transform-runtime": "^7.7.6",
-    "@babel/preset-env": "^7.7.6"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ]
-  },
-  "scripts": {
-    "pretest": "babel src --out-dir lib",
-    "test": "node lib/test.js",
-    "prepublish": "babel src --out-dir lib"
-  }
+    "name": "@azteam/model",
+    "version": "1.0.1",
+    "description": "",
+    "main": "lib/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/toda93/model.git"
+    },
+    "engines": {
+        "node": ">= 10.0.0",
+        "npm": "^6.0.0"
+    },
+    "keywords": [
+        "toda",
+        "nodejs",
+        "model",
+        "sequelize",
+        "cassandra",
+        "mysql"
+    ],
+    "author": "toda <sp.azsolution.net@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/toda93/model/issues"
+    },
+    "homepage": "https://github.com/toda93/model#readme",
+    "dependencies": {
+        "@azteam/error": "^1.0.0",
+        "lodash": "~4.17.10",
+        "mysql2": "~2.1.0",
+        "sanitize-html": "^1.20.1",
+        "sequelize": "~4.39.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.7.5",
+        "@babel/core": "^7.7.5",
+        "@babel/plugin-transform-async-to-generator": "^7.7.4",
+        "@babel/plugin-transform-runtime": "^7.7.6",
+        "@babel/preset-env": "^7.7.6",
+        "@babel/runtime": "^7.7.5"
+    },
+    "babel": {
+        "presets": [
+            [
+                "@babel/preset-env",
+                {
+                    "targets": {
+                        "node": "current"
+                    }
+                }
+            ]
+        ]
+    },
+    "scripts": {
+        "pretest": "babel src --out-dir lib",
+        "test": "node lib/test.js",
+        "prepublish": "babel src --out-dir lib"
+    }
 }
