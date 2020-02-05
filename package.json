@@ -1,6 +1,6 @@
 {
-    "name": "@azteam/model",
-    "version": "1.0.9",
+    "name": "@azteam/mysql-model",
+    "version": "1.0.1",
     "description": "",
     "main": "lib/index.js",
     "repository": {
@@ -16,7 +16,6 @@
         "nodejs",
         "model",
         "sequelize",
-        "cassandra",
         "mysql"
     ],
     "author": "toda <sp.azsolution.net@gmail.com>",

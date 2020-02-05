@@ -101,7 +101,7 @@ function registerConnection(name, config) {
     });
 }
 
-class MysqlModel extends Sequelize.Model {
+class Model extends Sequelize.Model {
 
 
     static createCacheName(prefix, options) {
@@ -433,6 +433,6 @@ export default MysqlModel;
 
 
 export {
-    DataTypes as MysqlDataTypes,
+    DataTypes,
     registerConnection
 }

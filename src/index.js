@@ -1,10 +1,10 @@
-import MysqlModel, {MysqlDataTypes, registerConnection} from './mysql';
-import MySQLDataRepository from './MySQLDataRepository';
+import Model, {MysqlDataTypes, registerConnection} from './mysql';
+import DataRepository from './DataRepository';
 
 
 export {
 	registerConnection,
 	MysqlDataTypes,
-	MysqlModel,
-	MySQLDataRepository
+	Model,
+	DataRepository
 }

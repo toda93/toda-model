@@ -1,4 +1,4 @@
-class MySQLDataRepository {
+class DataRepository {
     constructor(model, fks = []) {
         this.model = model;
         this.fks = fks;
@@ -111,4 +111,4 @@ class MySQLDataRepository {
 
 }
 
-export default MySQLDataRepository;
+export default DataRepository;
