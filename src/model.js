@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import crypto from 'crypto';
 import sanitizeHtml from 'sanitize-html';
+import {minify} from 'html-minifier';
 import { Sequelize, Validator, Op, DataTypes } from 'sequelize';
 import {
     ErrorException,
@@ -11,9 +12,6 @@ import {
     PHONE_NUMBER_FORMAT,
     SLUG_FORMAT
 } from '@azteam/error';
-
-
-
 
 
 function sanitize(content) {
@@ -101,7 +99,7 @@ function registerConnection(name, config) {
     });
 }
 
-class MysqlModel extends Sequelize.Model {
+class Model extends Sequelize.Model {
 
 
     static createCacheName(prefix, options) {
@@ -429,10 +427,10 @@ class MysqlModel extends Sequelize.Model {
     }
 }
 
-export default MysqlModel;
+export default Model;
 
 
 export {
-    DataTypes as MysqlDataTypes,
+    DataTypes,
     registerConnection
 }
