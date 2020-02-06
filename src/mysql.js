@@ -433,6 +433,6 @@ export default MysqlModel;
 
 
 export {
-    DataTypes,
+    DataTypes as MysqlDataTypes,
     registerConnection
 }
