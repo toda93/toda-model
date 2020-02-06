@@ -101,7 +101,7 @@ function registerConnection(name, config) {
     });
 }
 
-class Model extends Sequelize.Model {
+class MysqlModel extends Sequelize.Model {
 
 
     static createCacheName(prefix, options) {
