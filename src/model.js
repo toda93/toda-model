@@ -18,9 +18,9 @@ function sanitize(content) {
     content = sanitizeHtml(content, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'span', 'h2', 'article']),
         allowedAttributes: {
-            a: ['href', 'name', 'target'],
-            img: ['src', 'alt', 'title'],
-            iframe: ['src'],
+            a: ['href', 'name', 'target', 'style'],
+            img: ['src', 'alt', 'title', 'style'],
+            iframe: ['src', 'style'],
             '*': ['style'],
         },
         allowedStyles: {
