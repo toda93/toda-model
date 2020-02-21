@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import crypto from 'crypto';
-import sanitizeHtml from 'sanitize-html';
-import {minify} from 'html-minifier';
+
 import { Sequelize, Validator, Op, DataTypes } from 'sequelize';
 import {
     ErrorException,
@@ -12,36 +11,9 @@ import {
     PHONE_NUMBER_FORMAT,
     SLUG_FORMAT
 } from '@azteam/error';
+import {sanitize} from '@azteam/ultilities';
 
 
-function sanitize(content) {
-    content = sanitizeHtml(content, {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'span', 'h2', 'article']),
-        allowedAttributes: {
-            a: ['href', 'name', 'target', 'style'],
-            img: ['src', 'alt', 'title', 'style'],
-            iframe: ['src', 'style'],
-            '*': ['style'],
-        },
-        allowedStyles: {
-            '*': {
-                // Match HEX and RGB
-                'color': [/^\#(0x)?[0-9a-f]+$/i, /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/],
-                'text-align': [/^left$/, /^right$/, /^center$/],
-                // Match any number with px, em, or %
-                'font-size': [/^\d+(?:px|em|%)$/],
-                'line-height': [/^.*$/],
-                'font-style': [/^.*$/],
-                'font-family': [/^.*$/],
-                'font-weight': [/^bold$/],
-            }
-        },
-        allowedIframeHostnames: ['www.youtube.com']
-    });
-    return minify(content.trim(), {
-        collapseWhitespace: true
-    });
-}
 
 const createCacheName = (prefix, options) => {
     if (_.isEmpty(options)) {
