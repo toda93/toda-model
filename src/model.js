@@ -11,7 +11,7 @@ import {
     PHONE_NUMBER_FORMAT,
     SLUG_FORMAT
 } from '@azteam/error';
-import {sanitize} from '@azteam/ultilities';
+import {sanitize} from '@azteam/util';
 
 
 
