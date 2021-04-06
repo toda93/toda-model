@@ -1,10 +1,10 @@
-import Model, {DataTypes, registerConnection} from './model';
+import Model, { DataTypes } from './model';
 import DataRepository from './DataRepository';
-
+import Provider from './Provider';
 
 export {
-	registerConnection as registerMysqlConnection,
-	DataTypes as MysqlDataTypes,
-	Model as MysqlModel,
-	DataRepository as MysqlDataRepository
+    DataTypes as MysqlDataTypes,
+    Model as MysqlModel,
+    DataRepository as MysqlDataRepository,
+    Provider as MongoProvider
 }
