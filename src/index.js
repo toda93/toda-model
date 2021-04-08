@@ -6,5 +6,5 @@ export {
     DataTypes as MysqlDataTypes,
     Model as MysqlModel,
     DataRepository as MysqlDataRepository,
-    Provider as MongoProvider
+    Provider as MysqlProvider
 }
